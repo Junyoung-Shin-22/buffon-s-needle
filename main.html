@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buffon's Needle</title>
+</head>
+<body>
+    <h1 style="text-align: center;">Buffon's Needle Experiment</h1>
+    <p id="pi_real">real value of π = ...</p>
+    <p id="pi_approx">approx. value of π = ...</p>
+    <p id="needles_dropped"># of needles dropped: ...</p>
+    <p id="needles_hit"># of needles lied across the line: ...</p>
+    <canvas id="canvas" style="background: rgb(240, 240, 240)"></canvas>
+
+    <p>
+        # of needles to drop: 
+        <input id="num_drop"></input>
+        <button id="start">start</button>
+        <button id="reset">reset</button>
+    </p>
+
+    <script src="./main.js"></script>
+</body>
+</html>
