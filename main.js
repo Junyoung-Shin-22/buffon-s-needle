@@ -83,8 +83,8 @@ start = document.getElementById('start');
 start.onclick = () => {
     GLOBAL_NUM_DROP = parseInt(num_drop.value);
 
-    if (isNaN(GLOBAL_NUM_DROP)) {
-        alert('Please enter an integer number.');
+    if (isNaN(GLOBAL_NUM_DROP) || GLOBAL_NUM_DROP < 0 || GLOBAL_NUM_DROP > 1e5) {
+        alert('Please enter a valid natural number. (1 <= n <= 100,000)');
         return;
     }
 
