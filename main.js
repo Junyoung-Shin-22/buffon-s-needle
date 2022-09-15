@@ -1,4 +1,5 @@
-const LENGTH = 200;
+const D = 200;
+L = 0;
 
 GLOBAL_NUM_DROP = 0;
 GLOBAL_NEEDLES_DROPPED = 0;
@@ -31,18 +32,25 @@ function reset_all() {
     GLOBAL_NEEDLES_DROPPED = 0;
     GLOBAL_NEEDLES_HIT = 0;
 
+    num_drop.value = 10;
+    slider.value = 100;
+
     update();
     reset_canvas(ctx);
-    num_drop.value = 10;
+    slider.disabled = false;
 }
 
 function update() {
-    p = 2*GLOBAL_NEEDLES_DROPPED/GLOBAL_NEEDLES_HIT
-    e = Math.abs(Math.PI-p)/Math.PI * 100
+    p = 2 * GLOBAL_NEEDLES_DROPPED/GLOBAL_NEEDLES_HIT * L/D;
+    e = Math.abs(Math.PI-p)/Math.PI * 100;
 
-    pi_approx.textContent = 'approx. value of π ≈ 2n/r = ' + p.toFixed(8) + ' (relative error of ' + e.toFixed(3) + '%)';
+    L = slider.value / 100 * D
+    
+    pi_approx.textContent = 'approx. value of π ≈ 2n/r * l/d = ' + p.toFixed(8) + ' (relative error of ' + e.toFixed(3) + '%)';
     needles_dropped.textContent = '# of needles dropped: n = ' + GLOBAL_NEEDLES_DROPPED;
     needles_hit.textContent = '# of needles lied across the line: r = ' + GLOBAL_NEEDLES_HIT;
+
+    length.textContent = 'needle-width ratio: l/d =' + (slider.value / 100).toFixed(2);
 }
 
 function drop_needle(ctx) {
@@ -50,14 +58,14 @@ function drop_needle(ctx) {
     y = ctx.canvas.height * Math.random();
     theta = 2 * Math.PI * Math.random();
 
-    dx = LENGTH * Math.cos(theta);
-    dy = LENGTH * Math.sin(theta);
+    dx = L * Math.cos(theta);
+    dy = L * Math.sin(theta);
 
     x1 = x + dx; x2 = x - dx;
     y1 = y + dy; y2 = y - dy;
 
     GLOBAL_NEEDLES_DROPPED++;
-    if ((LENGTH - y1) * (LENGTH - y2) < 0) {
+    if ((D - y1) * (D - y2) < 0) {
         GLOBAL_NEEDLES_HIT++;
     }
     update();
@@ -66,7 +74,7 @@ function drop_needle(ctx) {
 
 canvas = document.getElementById('canvas');
 canvas.width = window.innerWidth;
-canvas.height = LENGTH * 2;
+canvas.height = D * 2;
 
 ctx = canvas.getContext('2d');
 
@@ -81,6 +89,7 @@ num_drop = document.getElementById('num_drop');
 
 start = document.getElementById('start');
 start.onclick = () => {
+    slider.disabled = true;
     GLOBAL_NUM_DROP = parseInt(num_drop.value);
 
     if (isNaN(GLOBAL_NUM_DROP) || GLOBAL_NUM_DROP < 0 || GLOBAL_NUM_DROP > 1e5) {
@@ -96,4 +105,8 @@ start.onclick = () => {
 reset = document.getElementById('reset');
 reset.onclick = () => {reset_all();};
 
+length = document.getElementById('length');
+
+slider = document.getElementById('slider');
+slider.oninput = update;
 reset_all();
