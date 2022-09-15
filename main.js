@@ -50,7 +50,7 @@ function update() {
     needles_dropped.textContent = '# of needles dropped: n = ' + GLOBAL_NEEDLES_DROPPED;
     needles_hit.textContent = '# of needles lied across the line: r = ' + GLOBAL_NEEDLES_HIT;
 
-    length.textContent = 'needle-width ratio: l/d =' + (slider.value / 100).toFixed(2);
+    length.textContent = 'needle length / strip width: l/d =' + (slider.value / 100).toFixed(2);
 }
 
 function drop_needle(ctx) {
